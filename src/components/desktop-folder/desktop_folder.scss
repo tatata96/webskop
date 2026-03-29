@@ -7,16 +7,25 @@
   z-index: 2;
 }
 
-.desktop-folder-tile:hover .desktop-folder-tile__remove,
-.desktop-folder-tile:focus-within .desktop-folder-tile__remove {
+.desktop-folder-tile:hover .desktop-folder-tile__actions,
+.desktop-folder-tile:focus-within .desktop-folder-tile__actions {
   opacity: 1;
 }
 
-.desktop-folder-tile__remove {
+.desktop-folder-tile__actions {
   position: absolute;
   top: -0.2rem;
   right: -0.2rem;
   z-index: 3;
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+
+.desktop-folder-tile__rename,
+.desktop-folder-tile__remove {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,16 +40,15 @@
   box-shadow: 0 2px 8px var(--overlay);
   cursor: pointer;
   line-height: 1;
-  font-size: 1.1rem;
-  opacity: 0;
-  transition: opacity 0.12s ease;
   touch-action: manipulation;
 }
 
+.desktop-folder-tile__rename:hover,
 .desktop-folder-tile__remove:hover {
   background: var(--gray-200);
 }
 
+.desktop-folder-tile__rename:focus-visible,
 .desktop-folder-tile__remove:focus-visible {
   opacity: 1;
   outline: 2px solid var(--white);
@@ -85,6 +93,23 @@
 .desktop-folder__label {
   max-width: 5.5rem;
   word-wrap: break-word;
+}
+
+.desktop-folder--rename-mode {
+  cursor: default;
+  user-select: auto;
+}
+
+.desktop-folder__rename-input {
+  width: 100%;
+  max-width: 5.5rem;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0.15rem 0.25rem;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--default-border-radius);
+  background: var(--white);
+  color: var(--text-main);
 }
 
 .desktop-folder--dragging {

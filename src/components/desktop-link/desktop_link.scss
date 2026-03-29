@@ -7,16 +7,25 @@
   z-index: 2;
 }
 
-.desktop-link-tile:hover .desktop-link-tile__remove,
-.desktop-link-tile:focus-within .desktop-link-tile__remove {
+.desktop-link-tile:hover .desktop-link-tile__actions,
+.desktop-link-tile:focus-within .desktop-link-tile__actions {
   opacity: 1;
 }
 
-.desktop-link-tile__remove {
+.desktop-link-tile__actions {
   position: absolute;
   top: -0.2rem;
   right: -0.2rem;
   z-index: 3;
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+
+.desktop-link-tile__rename,
+.desktop-link-tile__remove {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,16 +40,16 @@
   box-shadow: 0 2px 8px var(--overlay);
   cursor: pointer;
   line-height: 1;
-  font-size: 1.1rem;
-  opacity: 0;
-  transition: opacity 0.12s ease;
+  font-size: 0.95rem;
   touch-action: manipulation;
 }
 
+.desktop-link-tile__rename:hover,
 .desktop-link-tile__remove:hover {
   background: var(--gray-200);
 }
 
+.desktop-link-tile__rename:focus-visible,
 .desktop-link-tile__remove:focus-visible {
   opacity: 1;
   outline: 2px solid var(--white);
@@ -96,6 +105,22 @@
 .desktop-link__label {
   max-width: 7.5rem;
   word-wrap: break-word;
+}
+
+.desktop-link--rename-mode {
+  cursor: default;
+  user-select: auto;
+}
+
+.desktop-link__rename-input {
+  width: 100%;
+  max-width: 7.5rem;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0.15rem 0.25rem;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--default-border-radius);
+  background: var(--white);
 }
 
 .desktop-link--dragging {
