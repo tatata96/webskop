@@ -4,6 +4,8 @@ type DesktopBannerProps = {
   onGoHome: () => void
   showAdd: boolean
   onAddItem: () => void
+  resourcesOpen: boolean
+  onToggleResources: () => void
   onToggleFolderList: () => void
   folderListOpen: boolean
 }
@@ -59,6 +61,15 @@ export function DesktopBanner(props: DesktopBannerProps) {
         </button>
       </div>
       <div className="desktop-banner__right">
+        <button
+          type="button"
+          className="desktop-banner__resources-button typography--subhead-semibold"
+          onClick={props.onToggleResources}
+          aria-pressed={props.resourcesOpen}
+          title={props.resourcesOpen ? 'Close resources list' : 'Open resources list'}
+        >
+          Resources
+        </button>
         {props.showAdd ? (
           <button
             type="button"

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState, type SetStateAction } from 'react'
 import { DesktopBanner } from './components/desktop-banner/DesktopBanner'
 import { DesktopSidebar } from './components/desktop-sidebar/DesktopSidebar'
 import { Desktop } from './components/desktop/Desktop'
+import { ResourcesExport } from './components/resources-export/ResourcesExport'
 import type { DesktopItem, DesktopLinkRecord } from './core/storage/webStorageUtils'
 import { folderAccentColor } from './core/ui/folderAccentColor'
 import { loadFolders, saveFolder } from './core/storage/webStorageUtils'
@@ -23,6 +24,7 @@ function App() {
   )
   const [openFolderId, setOpenFolderId] = useState<string | null>(null)
   const [folderSidebarOpen, setFolderSidebarOpen] = useState(false)
+  const [resourcesPageOpen, setResourcesPageOpen] = useState(false)
 
   useEffect(() => {
     saveFolder(items)
@@ -51,6 +53,13 @@ function App() {
 
   function handleGoHome() {
     setOpenFolderId(null)
+    setResourcesPageOpen(false)
+  }
+
+  function handleToggleResources() {
+    setResourcesPageOpen(function toggle(open) {
+      return !open
+    })
   }
 
   function handleFoldersItemsChange(next: DesktopItem[]) {
@@ -92,6 +101,8 @@ function App() {
         onGoHome={handleGoHome}
         showAdd={openFolderId === null}
         onAddItem={handleAddItem}
+        resourcesOpen={resourcesPageOpen}
+        onToggleResources={handleToggleResources}
         folderListOpen={folderSidebarOpen}
         onToggleFolderList={function toggleFolderList() {
           setFolderSidebarOpen(function toggle(open) {
@@ -108,11 +119,19 @@ function App() {
             setFolderSidebarOpen(false)
           }}
           onFolderSelect={function selectFolderFromSidebar(folderId: string) {
+            setResourcesPageOpen(false)
             setOpenFolderId(folderId)
           }}
         />
         <div className="app-shell__main">
-          {openFolder ? (
+          {resourcesPageOpen ? (
+            <ResourcesExport
+              folders={items}
+              onClose={function closeResources() {
+                setResourcesPageOpen(false)
+              }}
+            />
+          ) : openFolder ? (
             <Desktop
               surface="links"
               items={openFolder.links}
