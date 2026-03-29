@@ -1,0 +1,1 @@
+type WebStorageStoredValue = any;
