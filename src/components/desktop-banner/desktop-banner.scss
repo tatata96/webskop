@@ -1,6 +1,6 @@
 .desktop-banner {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
   gap: 16px;
   padding: 20px 24px;
@@ -19,8 +19,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  align-self: stretch;
   margin: 0;
-  padding: 4px 8px;
+  padding: 0 10px;
   border: 0;
   border-radius: 10px;
   background: transparent;
@@ -36,12 +37,9 @@
   outline-offset: 2px;
 }
 
-.desktop-banner__logo {
-  display: block;
-  height: 36px;
-  width: auto;
-  max-width: min(200px, 40vw);
-  object-fit: contain;
+.desktop-banner__wordmark {
+  line-height: 1;
+  text-transform: lowercase;
 }
 
 .desktop-banner__add-button {
@@ -55,12 +53,13 @@
 
 .desktop-banner__left {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: 12px;
   min-width: 0;
 }
 
 .desktop-banner__menu-button {
+  align-self: center;
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;

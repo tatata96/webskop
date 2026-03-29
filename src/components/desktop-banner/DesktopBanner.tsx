@@ -1,4 +1,3 @@
-import logoUrl from '../../core/ui/images/logo.png'
 import './desktop-banner.scss'
 
 type DesktopBannerProps = {
@@ -54,7 +53,9 @@ export function DesktopBanner(props: DesktopBannerProps) {
           aria-label="Go to desktop home"
           title="Desktop home"
         >
-          <img className="desktop-banner__logo" src={logoUrl} alt="" />
+          <span className="desktop-banner__wordmark typography--h5 color--text-main">
+            webskop
+          </span>
         </button>
       </div>
       <div className="desktop-banner__right">

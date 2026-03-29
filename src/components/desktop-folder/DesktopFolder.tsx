@@ -1,3 +1,4 @@
+import folderIconUrl from '../../core/ui/icons/folder.svg'
 import './desktop_folder.scss'
 
 export type DesktopFolderProps = {
@@ -27,7 +28,7 @@ export function DesktopFolder(props: DesktopFolderProps) {
     >
       <img
         className="desktop-folder__icon"
-        src="/folder.jpg"
+        src={folderIconUrl}
         alt=""
         draggable={false}
       />
