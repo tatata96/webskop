@@ -2,6 +2,39 @@ import webStorage from './webStorage'
 
 export const DESKTOP_FOLDERS_STORAGE_KEY = 'webskop:desktop-folders'
 
+export const FOLDER_ICON_COLOR_STORAGE_KEY = 'webskop:folder-icon-color'
+
+/** Default matches favicon accent (`public/favicon.svg`). */
+export const DEFAULT_FOLDER_ICON_COLOR = '#f4c9ed'
+
+const FOLDER_ICON_COLOR_HEX6 = /^#[0-9A-Fa-f]{6}$/
+const FOLDER_ICON_COLOR_HEX3 = /^#[0-9A-Fa-f]{3}$/
+
+export function normalizeFolderIconColorHex(raw: unknown): string {
+  if (typeof raw !== 'string') return DEFAULT_FOLDER_ICON_COLOR
+  const s = raw.trim()
+  if (FOLDER_ICON_COLOR_HEX6.test(s)) return s.toLowerCase()
+  if (FOLDER_ICON_COLOR_HEX3.test(s)) {
+    const r = s[1]
+    const g = s[2]
+    const b = s[3]
+    return `#${r}${r}${g}${g}${b}${b}`.toLowerCase()
+  }
+  return DEFAULT_FOLDER_ICON_COLOR
+}
+
+export function loadFolderIconColor(): string {
+  const stored = webStorage.local.getItem<unknown>(FOLDER_ICON_COLOR_STORAGE_KEY)
+  return normalizeFolderIconColorHex(stored)
+}
+
+export function saveFolderIconColor(hex: string): void {
+  webStorage.local.setItem(
+    FOLDER_ICON_COLOR_STORAGE_KEY,
+    normalizeFolderIconColorHex(hex),
+  )
+}
+
 export type DesktopLinkRecord = {
   id: string
   url: string

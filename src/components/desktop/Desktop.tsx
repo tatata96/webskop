@@ -16,6 +16,7 @@ type DesktopFoldersProps = {
   items: DesktopFolderRecord[]
   onItemsChange: (items: DesktopFolderRecord[]) => void
   onFolderOpen: (folderId: string) => void
+  folderIconColor: string
 }
 
 type DesktopLinksProps = {
@@ -122,6 +123,7 @@ function DesktopFoldersView(props: DesktopFoldersProps) {
           <DesktopFolder
             key={folder.id}
             label={folder.label}
+            iconBodyColor={props.folderIconColor}
             x={folder.x}
             y={folder.y}
             dragging={draggingId === folder.id}
@@ -160,8 +162,8 @@ function DesktopLinksView(props: DesktopLinksProps) {
       ? {
           background: `linear-gradient(
         180deg,
-        color-mix(in srgb, ${props.folderAccentColor} 14%, var(--gray-250)),
-        var(--gray-250)
+        color-mix(in srgb, ${props.folderAccentColor} 14%, var(--blue-100)),
+        var(--blue-100)
       )`,
         }
       : undefined

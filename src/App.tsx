@@ -2,10 +2,16 @@ import { useCallback, useEffect, useState, type SetStateAction } from 'react'
 import { DesktopBanner } from './components/desktop-banner/DesktopBanner'
 import { DesktopSidebar } from './components/desktop-sidebar/DesktopSidebar'
 import { Desktop } from './components/desktop/Desktop'
+import { FolderColorPicker } from './components/folder-color-picker/FolderColorPicker'
 import { ResourcesExport } from './components/resources-export/ResourcesExport'
 import type { DesktopItem, DesktopLinkRecord } from './core/storage/webStorageUtils'
+import {
+  loadFolderIconColor,
+  loadFolders,
+  saveFolder,
+  saveFolderIconColor,
+} from './core/storage/webStorageUtils'
 import { folderAccentColor } from './core/ui/folderAccentColor'
-import { loadFolders, saveFolder } from './core/storage/webStorageUtils'
 import './App.scss'
 
 const defaultDesktopItems: DesktopItem[] = [
@@ -25,10 +31,15 @@ function App() {
   const [openFolderId, setOpenFolderId] = useState<string | null>(null)
   const [folderSidebarOpen, setFolderSidebarOpen] = useState(false)
   const [resourcesPageOpen, setResourcesPageOpen] = useState(false)
+  const [folderIconColor, setFolderIconColor] = useState(loadFolderIconColor)
 
   useEffect(() => {
     saveFolder(items)
   }, [items])
+
+  useEffect(() => {
+    saveFolderIconColor(folderIconColor)
+  }, [folderIconColor])
 
   function handleAddItem() {
     const index = items.length
@@ -132,6 +143,7 @@ function App() {
               items={items}
               onItemsChange={handleFoldersItemsChange}
               onFolderOpen={handleFolderOpen}
+              folderIconColor={folderIconColor}
             />
           )}
         </div>
@@ -148,6 +160,10 @@ function App() {
           }}
         />
       </div>
+      <FolderColorPicker
+        value={folderIconColor}
+        onChange={setFolderIconColor}
+      />
     </div>
   )
 }

@@ -132,6 +132,10 @@
     display: none !important;
   }
 
+  body.print-export .app-shell {
+    padding-top: 0;
+  }
+
   body.print-export .app-shell__body {
     display: block;
   }

@@ -1,4 +1,15 @@
+/* Vertical inset for fixed banner: padding + row (logo vs. right min-height). */
+:root {
+  --desktop-banner-offset: calc(20px + 42px + 20px);
+}
+
 .desktop-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  box-sizing: border-box;
   display: flex;
   align-items: stretch;
   justify-content: space-between;

@@ -1,0 +1,38 @@
+import type { CSSProperties } from 'react'
+
+export type FolderIconProps = {
+  bodyColor: string
+  className?: string
+  style?: CSSProperties
+}
+
+function folderTabColor(bodyColor: string): string {
+  return `color-mix(in srgb, ${bodyColor} 70%, #141414)`
+}
+
+export function FolderIcon(props: FolderIconProps) {
+  const tabFill = folderTabColor(props.bodyColor)
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 1024 1024"
+      width="800"
+      height="800"
+      className={props.className}
+      style={props.style}
+      aria-hidden={true}
+      onDragStart={function preventDrag(e) {
+        e.preventDefault()
+      }}
+    >
+      <path
+        fill={tabFill}
+        d="M853.333333 256H469.333333l-85.333333-85.333333H170.666667c-46.933333 0-85.333333 38.4-85.333334 85.333333v170.666667h853.333334v-85.333334c0-46.933333-38.4-85.333333-85.333334-85.333333z"
+      />
+      <path
+        fill={props.bodyColor}
+        d="M853.333333 256H170.666667c-46.933333 0-85.333333 38.4-85.333334 85.333333v426.666667c0 46.933333 38.4 85.333333 85.333334 85.333333h682.666666c46.933333 0 85.333333-38.4 85.333334-85.333333V341.333333c0-46.933333-38.4-85.333333-85.333334-85.333333z"
+      />
+    </svg>
+  )
+}

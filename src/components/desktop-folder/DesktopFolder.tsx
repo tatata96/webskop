@@ -1,9 +1,10 @@
-import folderIconUrl from '../../core/ui/icons/folder.svg'
+import { FolderIcon } from '../folder-icon/FolderIcon'
 import { useDesktopItemRename } from '../../hooks/useDesktopItemRename'
 import './desktop_folder.scss'
 
 export type DesktopFolderProps = {
   label: string
+  iconBodyColor: string
   x: number
   y: number
   dragging: boolean
@@ -45,12 +46,7 @@ export function DesktopFolder(props: DesktopFolderProps) {
   }
 
   const icon = (
-    <img
-      className="desktop-folder__icon"
-      src={folderIconUrl}
-      alt=""
-      draggable={false}
-    />
+    <FolderIcon className="desktop-folder__icon" bodyColor={props.iconBodyColor} />
   )
 
   const labelOrInput = isRenaming ? (
