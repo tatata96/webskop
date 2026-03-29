@@ -1,9 +1,8 @@
+import logoUrl from '../../core/ui/images/logo.png'
 import './desktop-banner.scss'
 
 type DesktopBannerProps = {
-  title: string
-  showBack: boolean
-  onBack: () => void
+  onGoHome: () => void
   showAdd: boolean
   onAddItem: () => void
   onToggleFolderList: () => void
@@ -48,16 +47,15 @@ export function DesktopBanner(props: DesktopBannerProps) {
             </svg>
           </span>
         </button>
-        {props.showBack ? (
-          <button
-            type="button"
-            className="desktop-banner__back typography--subhead-semibold"
-            onClick={props.onBack}
-          >
-            Back
-          </button>
-        ) : null}
-        <div className="desktop-banner__title typography--subhead-semibold">{props.title}</div>
+        <button
+          type="button"
+          className="desktop-banner__home"
+          onClick={props.onGoHome}
+          aria-label="Go to desktop home"
+          title="Desktop home"
+        >
+          <img className="desktop-banner__logo" src={logoUrl} alt="" />
+        </button>
       </div>
       <div className="desktop-banner__right">
         {props.showAdd ? (

@@ -49,7 +49,7 @@ function App() {
     setOpenFolderId(folderId)
   }
 
-  function handleBack() {
+  function handleGoHome() {
     setOpenFolderId(null)
   }
 
@@ -77,9 +77,7 @@ function App() {
   return (
     <div className="app-shell">
       <DesktopBanner
-        title={openFolder ? openFolder.label : 'Desktop'}
-        showBack={Boolean(openFolder)}
-        onBack={handleBack}
+        onGoHome={handleGoHome}
         showAdd={openFolderId === null}
         onAddItem={handleAddItem}
         folderListOpen={folderSidebarOpen}

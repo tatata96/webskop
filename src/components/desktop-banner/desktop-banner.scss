@@ -14,8 +14,34 @@
   backdrop-filter: blur(18px);
 }
 
-.desktop-banner__title {
-  color: var(--foreground);
+.desktop-banner__home {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.desktop-banner__home:hover {
+  background: color-mix(in srgb, var(--foreground) 10%, transparent);
+}
+
+.desktop-banner__home:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 2px;
+}
+
+.desktop-banner__logo {
+  display: block;
+  height: 36px;
+  width: auto;
+  max-width: min(200px, 40vw);
+  object-fit: contain;
 }
 
 .desktop-banner__add-button {
@@ -66,17 +92,6 @@
 .desktop-banner__folder-arrow-svg {
   display: block;
 }
-
-.desktop-banner__back {
-  flex-shrink: 0;
-  border: 0;
-  border-radius: 999px;
-  padding: 8px 14px;
-  background: color-mix(in srgb, var(--foreground) 14%, transparent);
-  color: var(--foreground);
-  cursor: pointer;
-}
-
 
 .desktop-banner__right {
   display: flex;
