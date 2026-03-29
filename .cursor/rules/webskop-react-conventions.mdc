@@ -1,0 +1,45 @@
+---
+description: Design system SCSS, kebab-case folders, function-only React for webskop
+alwaysApply: true
+---
+
+# webskop — React & file conventions
+
+## One folder per component
+
+- Put each UI component in its own directory under `src/components/`.
+- **Folder name**: **lowercase, words separated with hyphens** (kebab-case only — no spaces or PascalCase), e.g. `desktop`, `desktop-folder`, `task-bar`.
+- Example: `src/components/desktop/Desktop.tsx` + `src/components/desktop/desktop.scss`.
+
+## Files in each component folder
+
+- **TSX**: Name the file after the component in PascalCase, e.g. `Desktop.tsx` (not a generic `component.tsx`).
+- **SCSS**: One stylesheet per component, **`.scss` extension**, **lowercase**; **use underscores (`_`) to separate words** in the filename — not hyphens. Examples: `desktop.scss` (single word), `desktop_folder.scss` (matches folder `desktop-folder`).
+- Import from the TSX file: `import './desktop.scss'` or `import './desktop_folder.scss'`.
+
+## Design system & SCSS (required)
+
+- **Single global entry**: `src/index.scss` imports `src/core/ui/global.scss` once. **Do not** import `global.scss` again from component SCSS files (duplicates CSS output).
+- **Global bundle** (`src/core/ui/global.scss`) pulls in, in order: **global colors** (`style/color/_global-colors.scss`), **theme** (`style/color/_theme.scss`), **measure** (`_measure.scss`), **align** (`_align.scss`), **common** (`_common.scss`), **fonts** (`typography/_fonts.scss`), **typography utilities** (`typography/_typography.scss`). Extend `global.scss` when new shared UI layers are added.
+- **Colors**: Prefer palette and semantic tokens — `var(--gray-800)`, `var(--white)`, `var(--text-main)` inside `.light-theme`, etc. — from those files. Avoid ad hoc hex values in component styles when an existing token fits.
+- **Typography & color in markup**: Use the existing utility classes (`typography--body`, `typography--subhead-semibold`, `color--text-main`, `is-centered-text`, …) on elements alongside BEM classes instead of re-specifying font size, weight, or theme text colors in component SCSS when a utility exists.
+- **Layout helpers**: Reuse utilities from `_align.scss` / `_common.scss` (`is-centered`, `hide-on-sm`, …) when they match the need.
+- **Theme hook**: The app shell uses **`class="light-theme"`** on `<body>` (see `index.html`) so semantic theme variables resolve.
+- Component SCSS should emphasize **structure, spacing, and states** unique to that component; tokens and typography come from the globals above.
+
+## React style
+
+- Use **function components only** (no class components).
+- Declare components with the **`function` keyword** — do **not** use arrow functions for components or for exported component wrappers.
+
+```tsx
+// ✅ Good
+export function Desktop() {
+  return <div className="desktop">…</div>
+}
+
+// ❌ Avoid
+export const Desktop = () => { … }
+```
+
+- For helpers in the same file, prefer `function helperName() {}` over `const helperName = () => {}` unless a concise inline callback is required by an API (e.g. `array.map`); default to `function` declarations for named functions.

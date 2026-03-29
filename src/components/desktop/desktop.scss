@@ -1,0 +1,9 @@
+.desktop {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--background);
+  font-family: var(--font-family--secondary);
+}

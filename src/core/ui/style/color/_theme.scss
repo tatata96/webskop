@@ -1,0 +1,48 @@
+.light-theme {
+  --background: var(--white);
+
+  // Text
+  --text-main: var(--gray-900);
+  --text-gray: var(--gray-500);
+  --text-gray-lighter: var(--gray-300);
+  --text-link: var(--orange-700);
+  --text-danger: var(--red-darker);
+
+  // Primary Button
+  --button-primary-bg: var(--yellow-100);
+  --button-primary-hover-bg: var(--yellow-200);
+  --button-primary-disabled-bg: var(--gray-100);
+  --button-primary-text: var(--text-main);
+  --button-primary-hover-text: var(--text-main);
+  --button-primary-disabled-text: var(--gray-500);
+
+  // Secondary Button
+  --button-secondary-stroke: var(--orange-700);
+  --button-secondary-hover-stroke: var(--orange-800);
+  --button-secondary-disabled-stroke: var(--gray-300);
+  --button-secondary-text: var(--orange-700);
+  --button-secondary-hover-text: var(--orange-800);
+  --button-seconday-disabled-text: var(--gray-300);
+
+  // Ghost Button
+  --button-ghost-bg: var(--gray-50);
+  --button-ghost-hover-bg: var(--gray-200);
+
+  // Helpers
+  --orange-darker: var(--orange-500);
+  --orange: var(--orange-400);
+  --purple: var(--purple-400);
+  --turquoise: var(--turquoise-400);
+  --turquoise-darker: var(--turquoise-500);
+  --red-darker: var(--red-500);
+  --red-darker-rgb: 219, 65, 101;
+  --neutral-darker: var(--gray-200);
+  --neutral: var(--gray-100);
+  --neutral-lighter: var(--gray-50);
+
+  // Colors that doesn't use global colors
+  /* stylelint-disable color-no-hex */
+  /* prettier-ignore */
+  --status-purple: #7149CA;
+  /* stylelint-enable color-no-hex */
+}

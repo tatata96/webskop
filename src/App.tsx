@@ -1,9 +1,7 @@
+import { Desktop } from './components/desktop/Desktop'
+
 function App() {
-  return (
-    <main>
-      <h1>webskop</h1>
-    </main>
-  )
+  return <Desktop />
 }
 
 export default App

@@ -1,0 +1,21 @@
+@import "./_media-queries.scss";
+
+:root {
+  --default-transition: all 150ms ease;
+}
+
+.hide-on-sm {
+  @include for-small-screens {
+    /* stylelint-disable declaration-no-important */
+    display: none !important;
+    /* stylelint-enable declaration-no-important */
+  }
+}
+
+.hide-on-lg {
+  @include for-large-screens {
+    /* stylelint-disable declaration-no-important */
+    display: none !important;
+    /* stylelint-enable declaration-no-important */
+  }
+}

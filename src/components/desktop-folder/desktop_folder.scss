@@ -1,0 +1,44 @@
+.desktop-folder {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  width: 5.5rem;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  cursor: grab;
+  touch-action: none;
+  color: var(--text-main);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.desktop-folder:active {
+  cursor: grabbing;
+}
+
+.desktop-folder:focus-visible {
+  outline: 2px solid var(--white);
+  outline-offset: 4px;
+  border-radius: var(--default-border-radius);
+}
+
+.desktop-folder__icon {
+  width: 3.75rem;
+  height: 3rem;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 16px var(--overlay));
+}
+
+.desktop-folder__label {
+  max-width: 5.5rem;
+  word-wrap: break-word;
+}
+
+.desktop-folder--dragging {
+  opacity: 0.92;
+  z-index: 2;
+}

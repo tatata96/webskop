@@ -1,0 +1,20 @@
+@import "./_media-queries.scss";
+
+:root {
+  --page-content-max-width: 960px;
+  --page-header-height: 145px;
+  --page-header-z-index: 2;
+  --page-body-horizontal-padding: 40px;
+  --page-content-header-info-box-width: 300px;
+  --page-content-header-info-box-box-shadow-offset: 12px;
+  --default-border-radius: 4px;
+  --mobile-bottom-navbar-height: 72px;
+}
+
+@include for-small-screens {
+  :root {
+    --page-header-height: 72px;
+    --page-body-horizontal-padding: 20px;
+    --page-content-max-width: unset;
+  }
+}
