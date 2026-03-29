@@ -17,28 +17,6 @@ export function DesktopBanner(props: DesktopBannerProps) {
       <div className="desktop-banner__left">
         <button
           type="button"
-          className="desktop-banner__menu-button typography--subhead-semibold"
-          onClick={props.onToggleFolderList}
-          aria-expanded={props.folderListOpen}
-          aria-controls="desktop-folder-sidebar"
-          title={props.folderListOpen ? 'Hide folder list' : 'Show folder list'}
-        >
-          <svg
-            className={
-              props.folderListOpen
-                ? 'desktop-banner__folders-triangle desktop-banner__folders-triangle--open'
-                : 'desktop-banner__folders-triangle'
-            }
-            viewBox="0 0 12 14"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <polygon points="0,0 12,7 0,14" />
-          </svg>
-          
-        </button>
-        <button
-          type="button"
           className="desktop-banner__home"
           onClick={props.onGoHome}
           aria-label="Go to desktop home"
@@ -66,6 +44,27 @@ export function DesktopBanner(props: DesktopBannerProps) {
             Add Folder +
           </button>
         ) : null}
+        <button
+          type="button"
+          className="desktop-banner__menu-button typography--subhead-semibold"
+          onClick={props.onToggleFolderList}
+          aria-expanded={props.folderListOpen}
+          aria-controls="desktop-folder-sidebar"
+          title={props.folderListOpen ? 'Hide folder list' : 'Show folder list'}
+        >
+          <svg
+            className={
+              props.folderListOpen
+                ? 'desktop-banner__folders-triangle desktop-banner__folders-triangle--open'
+                : 'desktop-banner__folders-triangle'
+            }
+            viewBox="0 0 12 14"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <polygon points="0,0 12,7 0,14" />
+          </svg>
+        </button>
       </div>
     </header>
   )

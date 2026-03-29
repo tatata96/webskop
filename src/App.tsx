@@ -111,18 +111,6 @@ function App() {
         }}
       />
       <div className="app-shell__body">
-        <DesktopSidebar
-          open={folderSidebarOpen}
-          folders={items}
-          activeFolderId={openFolderId}
-          onClose={function closeFolderSidebar() {
-            setFolderSidebarOpen(false)
-          }}
-          onFolderSelect={function selectFolderFromSidebar(folderId: string) {
-            setResourcesPageOpen(false)
-            setOpenFolderId(folderId)
-          }}
-        />
         <div className="app-shell__main">
           {resourcesPageOpen ? (
             <ResourcesExport
@@ -147,6 +135,18 @@ function App() {
             />
           )}
         </div>
+        <DesktopSidebar
+          open={folderSidebarOpen}
+          folders={items}
+          activeFolderId={openFolderId}
+          onClose={function closeFolderSidebar() {
+            setFolderSidebarOpen(false)
+          }}
+          onFolderSelect={function selectFolderFromSidebar(folderId: string) {
+            setResourcesPageOpen(false)
+            setOpenFolderId(folderId)
+          }}
+        />
       </div>
     </div>
   )

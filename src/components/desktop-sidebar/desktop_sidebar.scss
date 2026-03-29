@@ -5,7 +5,7 @@
   flex-shrink: 0;
   width: 0;
   overflow: hidden;
-  transition: width 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: width 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .desktop-sidebar--open {
@@ -20,7 +20,7 @@
   display: flex;
   flex-direction: column;
   background: var(--background);
-  border-right: transparent;
+  border-left: transparent;
   box-shadow: transparent;
 }
 

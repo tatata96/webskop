@@ -52,18 +52,17 @@
   cursor: pointer;
 }
 
-/* Solid triangle: closed = tip right; open = tip left (horizontal flip). */
+/* Solid triangle (control on right): closed = tip toward screen edge; open = tip toward main (flip). */
 .desktop-banner__folders-triangle {
   display: block;
   flex-shrink: 0;
   width: 22px;
   height: 26px;
   transform-origin: center center;
-  transition: transform 0.22s ease;
 }
 
 .desktop-banner__folders-triangle polygon {
-  fill: var(--yellow-300);
+  fill: var(--orange-400);
 }
 
 .desktop-banner__folders-triangle--open {
