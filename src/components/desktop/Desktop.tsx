@@ -2,24 +2,23 @@ import { useRef, useState } from 'react'
 import { DesktopFolder } from '../desktop-folder/DesktopFolder'
 import './desktop.scss'
 
-type FolderItem = {
+export type DesktopItem = {
   id: string
   label: string
   x: number
   y: number
 }
 
+type DesktopProps = {
+  items: DesktopItem[]
+  onItemsChange: (items: DesktopItem[]) => void
+}
+
 const FOLDER_WIDTH = 96
 const FOLDER_HEIGHT = 108
 
-const INITIAL_FOLDERS: FolderItem[] = [
-  { id: '1', label: 'Bookmarks', x: 40, y: 40 },
-  { id: '2', label: 'Reading list', x: 40, y: 160 },
-]
-
-export function Desktop() {
+export function Desktop(props: DesktopProps) {
   const rootRef = useRef<HTMLDivElement>(null)
-  const [folders, setFolders] = useState<FolderItem[]>(INITIAL_FOLDERS)
   const [draggingId, setDraggingId] = useState<string | null>(null)
   const dragRef = useRef<{
     id: string
@@ -27,7 +26,7 @@ export function Desktop() {
     offsetY: number
   } | null>(null)
 
-  function handleFolderPointerDown(folder: FolderItem, e: React.PointerEvent<HTMLButtonElement>) {
+  function handleFolderPointerDown(folder: DesktopItem, e: React.PointerEvent<HTMLButtonElement>) {
     if (e.button !== 0) return
     e.preventDefault()
     const root = rootRef.current
@@ -49,12 +48,12 @@ export function Desktop() {
     let y = e.clientY - rect.top - drag.offsetY
     x = Math.max(0, Math.min(x, rect.width - FOLDER_WIDTH))
     y = Math.max(0, Math.min(y, rect.height - FOLDER_HEIGHT))
-    setFolders(function updateFolders(prev) {
-      return prev.map(function mapFolder(f) {
+    props.onItemsChange(
+      props.items.map(function mapFolder(f) {
         if (f.id !== drag.id) return f
         return { ...f, x, y }
-      })
-    })
+      }),
+    )
   }
 
   function handleFolderPointerUp(e: React.PointerEvent<HTMLButtonElement>) {
@@ -67,7 +66,7 @@ export function Desktop() {
 
   return (
     <div className="desktop" ref={rootRef}>
-      {folders.map(function renderFolder(folder) {
+      {props.items.map(function renderFolder(folder) {
         return (
           <DesktopFolder
             key={folder.id}
