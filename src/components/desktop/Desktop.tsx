@@ -214,6 +214,22 @@ export function Desktop(props: DesktopProps) {
     }
   }
 
+  function removeItemById(id: string) {
+    if (props.surface === 'folders') {
+      props.onItemsChange(
+        props.items.filter(function filterFolder(f) {
+          return f.id !== id
+        }),
+      )
+    } else {
+      props.onItemsChange(function filterLinks(prev) {
+        return prev.filter(function filterLink(L) {
+          return L.id !== id
+        })
+      })
+    }
+  }
+
   if (props.surface === 'folders') {
     return (
       <div className="desktop" ref={rootRef}>
@@ -225,6 +241,9 @@ export function Desktop(props: DesktopProps) {
               x={folder.x}
               y={folder.y}
               dragging={draggingId === folder.id}
+              onRemove={function removeFolder() {
+                removeItemById(folder.id)
+              }}
               onPointerDown={function onFolderDown(ev) {
                 handlePointerDown(folder, ev)
               }}
@@ -255,6 +274,9 @@ export function Desktop(props: DesktopProps) {
             x={link.x}
             y={link.y}
             dragging={draggingId === link.id}
+            onRemove={function removeLink() {
+              removeItemById(link.id)
+            }}
             onPointerDown={function onLinkDown(ev) {
               handlePointerDown(link, ev)
             }}

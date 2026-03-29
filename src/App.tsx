@@ -53,6 +53,18 @@ function App() {
     setOpenFolderId(null)
   }
 
+  function handleFoldersItemsChange(next: DesktopItem[]) {
+    setItems(next)
+    setOpenFolderId(function clearIfRemoved(prev) {
+      if (prev && !next.some(function hasId(f) {
+        return f.id === prev
+      })) {
+        return null
+      }
+      return prev
+    })
+  }
+
   const openFolder = openFolderId
     ? items.find(function find(f) {
         return f.id === openFolderId
@@ -111,7 +123,7 @@ function App() {
             <Desktop
               surface="folders"
               items={items}
-              onItemsChange={setItems}
+              onItemsChange={handleFoldersItemsChange}
               onFolderOpen={handleFolderOpen}
             />
           )}

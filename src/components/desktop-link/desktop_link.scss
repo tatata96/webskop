@@ -1,5 +1,54 @@
-.desktop-link {
+.desktop-link-tile {
   position: absolute;
+  z-index: 1;
+}
+
+.desktop-link-tile:has(.desktop-link--dragging) {
+  z-index: 2;
+}
+
+.desktop-link-tile:hover .desktop-link-tile__remove,
+.desktop-link-tile:focus-within .desktop-link-tile__remove {
+  opacity: 1;
+}
+
+.desktop-link-tile__remove {
+  position: absolute;
+  top: -0.2rem;
+  right: -0.2rem;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.375rem;
+  height: 1.375rem;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--text-main);
+  box-shadow: 0 2px 8px var(--overlay);
+  cursor: pointer;
+  line-height: 1;
+  font-size: 1.1rem;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+  touch-action: manipulation;
+}
+
+.desktop-link-tile__remove:hover {
+  background: var(--gray-200);
+}
+
+.desktop-link-tile__remove:focus-visible {
+  opacity: 1;
+  outline: 2px solid var(--white);
+  outline-offset: 2px;
+}
+
+.desktop-link {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -51,5 +100,4 @@
 
 .desktop-link--dragging {
   opacity: 0.92;
-  z-index: 2;
 }
