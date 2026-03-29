@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { DesktopBanner } from './components/desktop-banner/DesktopBanner'
 import { Desktop, type DesktopItem } from './components/desktop/Desktop'
+import { loadFolders, saveFolder } from './core/storage/webStorageUtils'
 import './App.scss'
 
-const desktopItems: DesktopItem[] = [
+const defaultDesktopItems: DesktopItem[] = [
   { id: '1', label: 'Bookmarks', x: 40, y: 40 },
   { id: '2', label: 'Reading list', x: 40, y: 160 },
 ]
@@ -14,7 +15,13 @@ const ITEM_START_Y = 40
 const ITEM_COLUMN_SIZE = 5
 
 function App() {
-  const [items, setItems] = useState<DesktopItem[]>(desktopItems)
+  const [items, setItems] = useState<DesktopItem[]>(
+    () => loadFolders() ?? defaultDesktopItems,
+  )
+
+  useEffect(() => {
+    saveFolder(items)
+  }, [items])
 
   function handleAddItem() {
     const index = items.length
