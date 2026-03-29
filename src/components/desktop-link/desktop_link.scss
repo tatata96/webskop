@@ -90,7 +90,7 @@
   aspect-ratio: 16 / 10;
   object-fit: cover;
   border-radius: calc(var(--default-border-radius) - 2px);
-  background: color-mix(in srgb, var(--foreground) 8%, transparent);
+  background: transparent;
 }
 
 .desktop-link__label {

@@ -4,37 +4,14 @@
   justify-content: space-between;
   gap: 16px;
   padding: 20px 24px;
-  background: color-mix(
-    in srgb,
-    var(--background) 78%,
-    var(--button-primary-bg) 22%
-  );
-  border-bottom: 1px solid
-    color-mix(in srgb, var(--foreground) 12%, transparent);
-  backdrop-filter: blur(18px);
+  background: var(--background);
 }
 
 .desktop-banner__home {
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  align-self: stretch;
-  margin: 0;
-  padding: 0 10px;
   border: 0;
   border-radius: 10px;
   background: transparent;
   cursor: pointer;
-}
-
-.desktop-banner__home:hover {
-  background: color-mix(in srgb, var(--foreground) 10%, transparent);
-}
-
-.desktop-banner__home:focus-visible {
-  outline: 2px solid var(--foreground);
-  outline-offset: 2px;
 }
 
 .desktop-banner__logo {
@@ -69,30 +46,28 @@
   gap: 8px;
   border: 0;
   border-radius: 999px;
-  padding: 8px 14px 8px 12px;
-  background: color-mix(in srgb, var(--foreground) 14%, transparent);
+  padding: 8px 14px;
+  background: transparent;
   color: var(--foreground);
   cursor: pointer;
 }
 
-.desktop-banner__menu-button:hover {
-  background: color-mix(in srgb, var(--foreground) 20%, transparent);
-}
-
-/* Points right when closed (open panel); rotates to point left when open. */
-.desktop-banner__folder-arrow {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+/* Solid triangle: closed = tip right; open = tip left (horizontal flip). */
+.desktop-banner__folders-triangle {
+  display: block;
+  flex-shrink: 0;
+  width: 22px;
+  height: 26px;
+  transform-origin: center center;
   transition: transform 0.22s ease;
 }
 
-.desktop-banner__folder-arrow--open {
-  transform: rotate(180deg);
+.desktop-banner__folders-triangle polygon {
+  fill: var(--yellow-300);
 }
 
-.desktop-banner__folder-arrow-svg {
-  display: block;
+.desktop-banner__folders-triangle--open {
+  transform: scaleX(-1);
 }
 
 .desktop-banner__right {
@@ -104,25 +79,13 @@
 }
 
 .desktop-banner__resources-button {
-  flex-shrink: 0;
-  border: 1px solid color-mix(in srgb, var(--foreground) 28%, transparent);
-  border-radius: 999px;
+  border: transparent;
   padding: 10px 16px;
-  background: color-mix(in srgb, var(--foreground) 6%, transparent);
+  background: transparent;
   color: var(--foreground);
   cursor: pointer;
 }
 
 .desktop-banner__resources-button:hover {
-  background: color-mix(in srgb, var(--foreground) 12%, transparent);
-}
-
-.desktop-banner__resources-button[aria-pressed='true'] {
-  background: color-mix(in srgb, var(--foreground) 18%, transparent);
-  border-color: color-mix(in srgb, var(--foreground) 40%, transparent);
-}
-
-.desktop-banner__resources-button:focus-visible {
-  outline: 2px solid var(--foreground);
-  outline-offset: 2px;
+  background: transparent;
 }

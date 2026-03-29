@@ -20,8 +20,8 @@
   display: flex;
   flex-direction: column;
   background: var(--background);
-  border-right: 1px solid color-mix(in srgb, var(--foreground) 12%, transparent);
-  box-shadow: 4px 0 24px color-mix(in srgb, var(--foreground) 8%, transparent);
+  border-right: transparent;
+  box-shadow: transparent;
 }
 
 .desktop-sidebar__nav {
@@ -67,9 +67,4 @@
     var(--folder-accent) 88%,
     var(--text-main)
   );
-}
-
-.desktop-sidebar__row:focus-visible {
-  outline: 2px solid var(--text-link);
-  outline-offset: -2px;
 }

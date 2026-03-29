@@ -82,8 +82,8 @@
   top: 16px;
   padding: 16px;
   border-radius: 12px;
-  background: color-mix(in srgb, var(--foreground) 8%, transparent);
-  border: 1px solid color-mix(in srgb, var(--foreground) 12%, transparent);
+  background: transparent;
+  border: 1px solid transparent;
 }
 
 .resources-export__action-buttons {

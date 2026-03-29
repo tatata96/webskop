@@ -23,31 +23,19 @@ export function DesktopBanner(props: DesktopBannerProps) {
           aria-controls="desktop-folder-sidebar"
           title={props.folderListOpen ? 'Hide folder list' : 'Show folder list'}
         >
-          <span
+          <svg
             className={
               props.folderListOpen
-                ? 'desktop-banner__folder-arrow desktop-banner__folder-arrow--open'
-                : 'desktop-banner__folder-arrow'
+                ? 'desktop-banner__folders-triangle desktop-banner__folders-triangle--open'
+                : 'desktop-banner__folders-triangle'
             }
-            aria-hidden
+            viewBox="0 0 12 14"
+            aria-hidden="true"
+            focusable="false"
           >
-            <svg
-              className="desktop-banner__folder-arrow-svg"
-              viewBox="0 0 24 24"
-              width={20}
-              height={20}
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M9 6l6 6-6 6"
-                stroke="currentColor"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </span>
+            <polygon points="0,0 12,7 0,14" />
+          </svg>
+          
         </button>
         <button
           type="button"
