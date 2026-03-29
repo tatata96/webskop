@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState, type SetStateAction } from 'react'
 import { DesktopBanner } from './components/desktop-banner/DesktopBanner'
+import { DesktopSidebar } from './components/desktop-sidebar/DesktopSidebar'
 import { Desktop } from './components/desktop/Desktop'
 import type { DesktopItem, DesktopLinkRecord } from './core/storage/webStorageUtils'
+import { folderAccentColor } from './core/ui/folderAccentColor'
 import { loadFolders, saveFolder } from './core/storage/webStorageUtils'
 import './App.scss'
 
@@ -20,6 +22,7 @@ function App() {
     () => loadFolders() ?? defaultDesktopItems,
   )
   const [openFolderId, setOpenFolderId] = useState<string | null>(null)
+  const [folderSidebarOpen, setFolderSidebarOpen] = useState(false)
 
   useEffect(() => {
     saveFolder(items)
@@ -79,21 +82,43 @@ function App() {
         onBack={handleBack}
         showAdd={openFolderId === null}
         onAddItem={handleAddItem}
+        folderListOpen={folderSidebarOpen}
+        onToggleFolderList={function toggleFolderList() {
+          setFolderSidebarOpen(function toggle(open) {
+            return !open
+          })
+        }}
       />
-      {openFolder ? (
-        <Desktop
-          surface="links"
-          items={openFolder.links}
-          onItemsChange={handleFolderLinksChange}
+      <div className="app-shell__body">
+        <DesktopSidebar
+          open={folderSidebarOpen}
+          folders={items}
+          activeFolderId={openFolderId}
+          onClose={function closeFolderSidebar() {
+            setFolderSidebarOpen(false)
+          }}
+          onFolderSelect={function selectFolderFromSidebar(folderId: string) {
+            setOpenFolderId(folderId)
+          }}
         />
-      ) : (
-        <Desktop
-          surface="folders"
-          items={items}
-          onItemsChange={setItems}
-          onFolderOpen={handleFolderOpen}
-        />
-      )}
+        <div className="app-shell__main">
+          {openFolder ? (
+            <Desktop
+              surface="links"
+              items={openFolder.links}
+              onItemsChange={handleFolderLinksChange}
+              folderAccentColor={folderAccentColor(openFolder.id)}
+            />
+          ) : (
+            <Desktop
+              surface="folders"
+              items={items}
+              onItemsChange={setItems}
+              onFolderOpen={handleFolderOpen}
+            />
+          )}
+        </div>
+      </div>
     </div>
   )
 }

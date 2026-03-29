@@ -1,4 +1,4 @@
-import type { DesktopLinkRecord } from './storage/webStorageUtils'
+import type { DesktopLinkRecord } from '../storage/webStorageUtils'
 
 export type LinkPreviewResult = {
   title?: string

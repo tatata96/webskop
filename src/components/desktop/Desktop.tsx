@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import type { Dispatch, SetStateAction } from 'react'
 import { DesktopFolder } from '../desktop-folder/DesktopFolder'
 import { DesktopLink } from '../desktop-link/DesktopLink'
@@ -40,6 +40,7 @@ type DesktopLinksProps = {
   surface: 'links'
   items: DesktopLinkRecord[]
   onItemsChange: Dispatch<SetStateAction<DesktopLinkRecord[]>>
+  folderAccentColor: string
 }
 
 export type DesktopProps = DesktopFoldersProps | DesktopLinksProps
@@ -237,8 +238,12 @@ export function Desktop(props: DesktopProps) {
     )
   }
 
+  const linkSurfaceStyle: CSSProperties = {
+    backgroundColor: props.folderAccentColor,
+  }
+
   return (
-    <div className="desktop" ref={rootRef}>
+    <div className="desktop" ref={rootRef} style={linkSurfaceStyle}>
       {props.items.map(function renderLink(link) {
         const imageSrc = link.previewImageUrl || faviconUrlForPageUrl(link.url) || FALLBACK_THUMB
         return (

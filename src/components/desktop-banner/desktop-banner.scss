@@ -34,6 +34,39 @@
   min-width: 0;
 }
 
+.desktop-banner__menu-button {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 14px 8px 12px;
+  background: color-mix(in srgb, var(--foreground) 14%, transparent);
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+.desktop-banner__menu-button:hover {
+  background: color-mix(in srgb, var(--foreground) 20%, transparent);
+}
+
+/* Points right when closed (open panel); rotates to point left when open. */
+.desktop-banner__folder-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.22s ease;
+}
+
+.desktop-banner__folder-arrow--open {
+  transform: rotate(180deg);
+}
+
+.desktop-banner__folder-arrow-svg {
+  display: block;
+}
+
 .desktop-banner__back {
   flex-shrink: 0;
   border: 0;
