@@ -1,0 +1,55 @@
+.desktop-link {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  width: 7.5rem;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.desktop-link:active {
+  cursor: grabbing;
+}
+
+.desktop-link:focus-visible {
+  outline: 2px solid var(--white);
+  outline-offset: 4px;
+  border-radius: var(--default-border-radius);
+}
+
+.desktop-link__frame {
+  display: block;
+  width: 100%;
+  max-width: 7.5rem;
+  padding: 2px;
+  border-radius: var(--default-border-radius);
+  background: var(--white);
+  box-shadow: 0 6px 18px var(--overlay);
+}
+
+.desktop-link__thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: calc(var(--default-border-radius) - 2px);
+  background: color-mix(in srgb, var(--foreground) 8%, transparent);
+}
+
+.desktop-link__label {
+  max-width: 7.5rem;
+  word-wrap: break-word;
+}
+
+.desktop-link--dragging {
+  opacity: 0.92;
+  z-index: 2;
+}

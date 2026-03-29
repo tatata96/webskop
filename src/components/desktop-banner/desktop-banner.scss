@@ -26,3 +26,28 @@
   color: var(--text-main);
   cursor: pointer;
 }
+
+.desktop-banner__left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.desktop-banner__back {
+  flex-shrink: 0;
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: color-mix(in srgb, var(--foreground) 14%, transparent);
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+
+.desktop-banner__right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 42px;
+}

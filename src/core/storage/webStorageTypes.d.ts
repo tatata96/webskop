@@ -1,1 +1,1 @@
-type WebStorageStoredValue = any;
+type WebStorageStoredValue = unknown;
