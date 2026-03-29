@@ -37,9 +37,12 @@
   outline-offset: 2px;
 }
 
-.desktop-banner__wordmark {
-  line-height: 1;
-  text-transform: lowercase;
+.desktop-banner__logo {
+  display: block;
+  height: 32px;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
 }
 
 .desktop-banner__add-button {
