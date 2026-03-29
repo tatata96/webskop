@@ -1,4 +1,4 @@
-@import "./_media-queries.scss";
+@use "./media-queries" as *;
 
 :root {
   --default-transition: all 150ms ease;

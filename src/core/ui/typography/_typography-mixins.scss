@@ -1,4 +1,4 @@
-@import "../style/media-queries";
+@use "../style/media-queries" as *;
 
 :root {
   --font-family--primary: "Space Grotesk", sans-serif;

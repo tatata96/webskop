@@ -1,9 +1,9 @@
 // Global design system — import once from `src/index.scss` (do not import this whole file from component SCSS; use vars + typography classes in markup).
 
-@import "./style/color/global-colors";
-@import "./style/color/theme";
-@import "./style/measure";
-@import "./style/align";
-@import "./style/common";
-@import "./typography/fonts";
-@import "./typography/typography";
+@use "./style/color/global-colors";
+@use "./style/color/theme";
+@use "./style/measure";
+@use "./style/align";
+@use "./style/common";
+@use "./typography/fonts";
+@use "./typography/typography";

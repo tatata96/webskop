@@ -1,4 +1,4 @@
-@import "./typography-mixins";
+@use "./typography-mixins" as *;
 
 .typography--h0 {
   @include typography--h0();
