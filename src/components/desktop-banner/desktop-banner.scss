@@ -1,0 +1,28 @@
+.desktop-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  background: color-mix(
+    in srgb,
+    var(--background) 78%,
+    var(--button-primary-bg) 22%
+  );
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--foreground) 12%, transparent);
+  backdrop-filter: blur(18px);
+}
+
+.desktop-banner__title {
+  color: var(--foreground);
+}
+
+.desktop-banner__add-button {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 16px;
+  background: var(--foreground);
+  color: var(--text-main);
+  cursor: pointer;
+}
