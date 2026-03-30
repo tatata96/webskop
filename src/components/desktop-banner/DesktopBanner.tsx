@@ -27,6 +27,7 @@ type DesktopBannerProps = {
   searchDropdownOpen: boolean
   searchResults: DesktopSearchResult[]
   onSelectSearchResult: (result: DesktopSearchResult) => void
+  currentFolderLabel: string | null
 }
 
 export function DesktopBanner(props: DesktopBannerProps) {
@@ -78,6 +79,13 @@ export function DesktopBanner(props: DesktopBannerProps) {
         >
           <img className="desktop-banner__logo" src={logoUrl} alt="" />
         </button>
+        <div className="desktop-banner__current-folder-slot" aria-hidden={!props.currentFolderLabel}>
+          {props.currentFolderLabel ? (
+            <span className="desktop-banner__current-folder typography--subhead-semibold color--text-main">
+              {props.currentFolderLabel}
+            </span>
+          ) : null}
+        </div>
         <div className="desktop-banner__search">
           <input
             type="search"

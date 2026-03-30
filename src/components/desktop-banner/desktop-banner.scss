@@ -50,6 +50,13 @@
   max-width: 520px;
 }
 
+.desktop-banner__current-folder-slot {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  min-width: 140px;
+}
+
 .desktop-banner__search-input {
   width: 100%;
   padding: 12px 16px;

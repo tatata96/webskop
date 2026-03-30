@@ -126,6 +126,7 @@ function App() {
         searchDropdownOpen={openFolderId === null && hasSearchQuery}
         searchResults={globalLinkResults}
         onSelectSearchResult={handleSearchResultSelect}
+        currentFolderLabel={openFolder?.label ?? null}
       />
 
       <div className="app-shell__body">
