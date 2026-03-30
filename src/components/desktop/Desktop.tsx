@@ -1,8 +1,10 @@
+import type { Dispatch, SetStateAction } from 'react'
 import { DesktopFolder } from '../desktop-folder/DesktopFolder'
 import { DesktopLink } from '../desktop-link/DesktopLink'
 import type { DesktopFolderRecord, DesktopLinkRecord } from '../../core/storage/webStorageUtils'
 import { faviconUrlForPageUrl } from '../../core/url/linkPreview'
 import { useDesktopItemDrag } from '../../hooks/useDesktopItemDrag'
+import { useDesktopLinksPaste } from '../../hooks/useDesktopLinksPaste'
 import './desktop.scss'
 
 const FOLDER_WIDTH = 96
@@ -21,7 +23,7 @@ type DesktopFoldersProps = {
 type DesktopLinksProps = {
   surface: 'links'
   items: DesktopLinkRecord[]
-  onItemsChange: (items: DesktopLinkRecord[]) => void
+  onItemsChange: Dispatch<SetStateAction<DesktopLinkRecord[]>>
   folderAccentColor?: string
   onFolderOpen?: (folderId: string) => void
   folderIconColor?: string
@@ -42,7 +44,7 @@ export function Desktop({
       <DesktopLinksView
         surface="links"
         items={items as DesktopLinkRecord[]}
-        onItemsChange={onItemsChange as (items: DesktopLinkRecord[]) => void}
+        onItemsChange={onItemsChange}
         folderAccentColor={(rest as DesktopLinksProps).folderAccentColor}
       />
     )
@@ -87,7 +89,9 @@ function DesktopFoldersView({
 
   function handleFolderLabelChange(folderId: string, nextLabel: string) {
     const next = items.map((f) => {
-      if (f.id !== folderId) return f
+      if (f.id !== folderId) {
+        return f
+      }
       return { ...f, label: nextLabel }
     })
     onItemsChange(next)
@@ -135,7 +139,9 @@ function DesktopLinksView({
     handlePointerCancel,
   } = useDesktopItemDrag<DesktopLinkRecord>({
     items,
-    onItemsChange,
+    onItemsChange: function handleLinksDragChange(next) {
+      onItemsChange(next)
+    },
     tileWidth: LINK_TILE_WIDTH,
     tileHeight: LINK_TILE_HEIGHT,
     onItemClick: (linkId) => {
@@ -144,6 +150,11 @@ function DesktopLinksView({
         window.open(link.url, '_blank', 'noopener,noreferrer')
       }
     },
+  })
+
+  useDesktopLinksPaste({
+    enabled: true,
+    onItemsChange,
   })
 
   const desktopStyle =
@@ -164,7 +175,9 @@ function DesktopLinksView({
 
   function handleLinkLabelChange(linkId: string, nextLabel: string) {
     const next = items.map((L) => {
-      if (L.id !== linkId) return L
+      if (L.id !== linkId) {
+        return L
+      }
       return { ...L, label: nextLabel }
     })
     onItemsChange(next)

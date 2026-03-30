@@ -25,9 +25,8 @@ type UseDesktopItemDragParams<T extends DesktopDraggableItem> = {
 }
 
 export function useDesktopItemDrag<T extends DesktopDraggableItem>(
-  params: UseDesktopItemDragParams<T>,
+  { items, onItemsChange, tileWidth, tileHeight, onItemClick }: UseDesktopItemDragParams<T>,
 ) {
-  const { items, onItemsChange, tileWidth, tileHeight, onItemClick } = params
 
   const rootRef = useRef<HTMLDivElement>(null)
   const [draggingId, setDraggingId] = useState<string | null>(null)

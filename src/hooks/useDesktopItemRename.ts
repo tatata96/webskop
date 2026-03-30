@@ -1,12 +1,11 @@
-import { useEffect, useRef, useState, type ChangeEvent, type KeyboardEvent } from 'react'
+import {useEffect, useRef, useState, type ChangeEvent, type KeyboardEvent} from 'react'
 
 type UseDesktopItemRenameParams = {
   label: string
   onLabelChange: (nextLabel: string) => void
 }
 
-export function useDesktopItemRename(params: UseDesktopItemRenameParams) {
-  const { label, onLabelChange } = params
+export function useDesktopItemRename({label, onLabelChange}: UseDesktopItemRenameParams) {
 
   const [isRenaming, setIsRenaming] = useState(false)
   const [draft, setDraft] = useState(label)
@@ -66,7 +65,7 @@ export function useDesktopItemRename(params: UseDesktopItemRenameParams) {
     }
   }
 
-  function stopRenameEventBubble(e: { stopPropagation(): void }) {
+  function stopRenameEventBubble(e: {stopPropagation(): void}) {
     e.stopPropagation()
   }
 
