@@ -48,24 +48,24 @@ function DesktopFoldersView(props: DesktopFoldersProps) {
 
   function handleFolderPointerDown(
     folder: DesktopFolderRecord,
-    e: PointerEvent<HTMLButtonElement>,
+    event: PointerEvent<HTMLButtonElement>,
   ) {
-    if (e.button !== 0) return
-    e.preventDefault()
+    if (event.button !== 0) return
+    event.preventDefault()
     const root = rootRef.current
     if (!root) return
     const rect = root.getBoundingClientRect()
-    const offsetX = e.clientX - rect.left - folder.x
-    const offsetY = e.clientY - rect.top - folder.y
+    const offsetX = event.clientX - rect.left - folder.x
+    const offsetY = event.clientY - rect.top - folder.y
     dragRef.current = {
       id: folder.id,
       offsetX,
       offsetY,
-      startClientX: e.clientX,
-      startClientY: e.clientY,
+      startClientX: event.clientX,
+      startClientY: event.clientY,
     }
     setDraggingId(folder.id)
-    e.currentTarget.setPointerCapture(e.pointerId)
+    event.currentTarget.setPointerCapture(event.pointerId)
   }
 
   function handleFolderPointerMove(e: PointerEvent<HTMLButtonElement>) {
@@ -77,7 +77,7 @@ function DesktopFoldersView(props: DesktopFoldersProps) {
     let y = e.clientY - rect.top - drag.offsetY
     x = Math.max(0, Math.min(x, rect.width - FOLDER_WIDTH))
     y = Math.max(0, Math.min(y, rect.height - FOLDER_HEIGHT))
-    const next = props.items.map(function mapFolder(f) {
+    const next = props.items.map((f) => {
       if (f.id !== drag.id) return f
       return { ...f, x, y }
     })
@@ -102,14 +102,12 @@ function DesktopFoldersView(props: DesktopFoldersProps) {
   }
 
   function handleFolderRemove(folderId: string) {
-    const next = props.items.filter(function keepOther(f) {
-      return f.id !== folderId
-    })
+    const next = props.items.filter((folder) => folder .id !== folderId)
     props.onItemsChange(next)
   }
 
   function handleFolderLabelChange(folderId: string, nextLabel: string) {
-    const next = props.items.map(function mapFolder(f) {
+    const next = props.items.map((f) => {
       if (f.id !== folderId) return f
       return { ...f, label: nextLabel }
     })
@@ -118,30 +116,28 @@ function DesktopFoldersView(props: DesktopFoldersProps) {
 
   return (
     <div className="desktop" ref={rootRef}>
-      {props.items.map(function renderFolder(folder) {
-        return (
-          <DesktopFolder
-            key={folder.id}
-            label={folder.label}
-            iconBodyColor={props.folderIconColor}
-            x={folder.x}
-            y={folder.y}
-            dragging={draggingId === folder.id}
-            onPointerDown={function onFolderDown(ev) {
-              handleFolderPointerDown(folder, ev)
-            }}
-            onPointerMove={handleFolderPointerMove}
-            onPointerUp={handleFolderPointerUp}
-            onPointerCancel={handleFolderPointerUp}
-            onRemove={function onFolderRemove() {
-              handleFolderRemove(folder.id)
-            }}
-            onLabelChange={function onFolderLabelChange(nextLabel) {
-              handleFolderLabelChange(folder.id, nextLabel)
-            }}
-          />
-        )
-      })}
+      {props.items.map((folder) => (
+        <DesktopFolder
+          key={folder.id}
+          label={folder.label}
+          iconBodyColor={props.folderIconColor}
+          x={folder.x}
+          y={folder.y}
+          dragging={draggingId === folder.id}
+          onPointerDown={(ev) => {
+            handleFolderPointerDown(folder, ev)
+          }}
+          onPointerMove={handleFolderPointerMove}
+          onPointerUp={handleFolderPointerUp}
+          onPointerCancel={handleFolderPointerUp}
+          onRemove={() => {
+            handleFolderRemove(folder.id)
+          }}
+          onLabelChange={(nextLabel) => {
+            handleFolderLabelChange(folder.id, nextLabel)
+          }}
+        />
+      ))}
     </div>
   )
 }
@@ -168,23 +164,23 @@ function DesktopLinksView(props: DesktopLinksProps) {
         }
       : undefined
 
-  function handleLinkPointerDown(link: DesktopLinkRecord, e: PointerEvent<HTMLButtonElement>) {
-    if (e.button !== 0) return
-    e.preventDefault()
+  function handleLinkPointerDown(link: DesktopLinkRecord, event: PointerEvent<HTMLButtonElement>) {
+    if (event.button !== 0) return
+    event.preventDefault()
     const root = rootRef.current
     if (!root) return
     const rect = root.getBoundingClientRect()
-    const offsetX = e.clientX - rect.left - link.x
-    const offsetY = e.clientY - rect.top - link.y
+    const offsetX = event.clientX - rect.left - link.x
+    const offsetY = event.clientY - rect.top - link.y
     dragRef.current = {
       id: link.id,
       offsetX,
       offsetY,
-      startClientX: e.clientX,
-      startClientY: e.clientY,
+      startClientX: event.clientX,
+      startClientY: event.clientY,
     }
     setDraggingId(link.id)
-    e.currentTarget.setPointerCapture(e.pointerId)
+    event.currentTarget.setPointerCapture(event .pointerId)
   }
 
   function handleLinkPointerMove(e: PointerEvent<HTMLButtonElement>) {
@@ -196,7 +192,7 @@ function DesktopLinksView(props: DesktopLinksProps) {
     let y = e.clientY - rect.top - drag.offsetY
     x = Math.max(0, Math.min(x, rect.width - LINK_TILE_WIDTH))
     y = Math.max(0, Math.min(y, rect.height - LINK_TILE_HEIGHT))
-    const next = props.items.map(function mapLink(L) {
+    const next = props.items.map((L) => {
       if (L.id !== drag.id) return L
       return { ...L, x, y }
     })
@@ -215,9 +211,7 @@ function DesktopLinksView(props: DesktopLinksProps) {
         Math.abs(e.clientX - drag.startClientX) > CLICK_MOVE_THRESHOLD_PX ||
         Math.abs(e.clientY - drag.startClientY) > CLICK_MOVE_THRESHOLD_PX
       if (!moved) {
-        const link = props.items.find(function findById(L) {
-          return L.id === drag.id
-        })
+        const link = props.items.find((L) => L.id === drag.id)
         if (link) {
           window.open(link.url, '_blank', 'noopener,noreferrer')
         }
@@ -226,14 +220,12 @@ function DesktopLinksView(props: DesktopLinksProps) {
   }
 
   function handleLinkRemove(linkId: string) {
-    const next = props.items.filter(function keepOther(L) {
-      return L.id !== linkId
-    })
+    const next = props.items.filter((L) => L.id !== linkId)
     props.onItemsChange(next)
   }
 
   function handleLinkLabelChange(linkId: string, nextLabel: string) {
-    const next = props.items.map(function mapLink(L) {
+    const next = props.items.map((L) => {
       if (L.id !== linkId) return L
       return { ...L, label: nextLabel }
     })
@@ -242,7 +234,7 @@ function DesktopLinksView(props: DesktopLinksProps) {
 
   return (
     <div className="desktop" ref={rootRef} style={desktopStyle}>
-      {props.items.map(function renderLink(link) {
+      {props.items.map((link) => {
         const imageSrc = link.previewImageUrl ?? faviconUrlForPageUrl(link.url)
         const imageAlt = link.label || link.url
         return (
@@ -254,16 +246,16 @@ function DesktopLinksView(props: DesktopLinksProps) {
             x={link.x}
             y={link.y}
             dragging={draggingId === link.id}
-            onPointerDown={function onLinkDown(ev) {
-              handleLinkPointerDown(link, ev)
+            onPointerDown={(event) => {
+              handleLinkPointerDown(link, event)
             }}
             onPointerMove={handleLinkPointerMove}
             onPointerUp={handleLinkPointerUp}
             onPointerCancel={handleLinkPointerUp}
-            onRemove={function onLinkRemove() {
+            onRemove={() => {
               handleLinkRemove(link.id)
             }}
-            onLabelChange={function onLinkLabelChange(nextLabel) {
+            onLabelChange={(nextLabel) => {
               handleLinkLabelChange(link.id, nextLabel)
             }}
           />

@@ -14,7 +14,7 @@ export function FolderColorPicker(props: FolderColorPickerProps) {
         value={props.value}
         aria-label="Folder color"
         title="Folder color"
-        onChange={function onFolderColorChange(e) {
+        onChange={(e) => {
           props.onChange(e.target.value)
         }}
       />

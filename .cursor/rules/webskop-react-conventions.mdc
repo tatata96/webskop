@@ -30,7 +30,9 @@ alwaysApply: true
 ## React style
 
 - Use **function components only** (no class components).
-- Declare components with the **`function` keyword** — do **not** use arrow functions for components or for exported component wrappers.
+- Use the **`function` keyword by default** for named functions, helpers, and exported declarations.
+- Do **not** use arrow functions for component declarations or general named helpers.
+- Exception: arrow functions are allowed (and preferred when concise) for short inline callbacks required by APIs such as `map`, `filter`, `reduce`, `find`, event listeners, and React state updater functions like `setState(prev => …)`.
 
 ```tsx
 // ✅ Good
@@ -42,4 +44,8 @@ export function Desktop() {
 export const Desktop = () => { … }
 ```
 
-- For helpers in the same file, prefer `function helperName() {}` over `const helperName = () => {}` unless a concise inline callback is required by an API (e.g. `array.map`); default to `function` declarations for named functions.
+- For named helpers in the same file, prefer `function helperName() {}` over `const helperName = () => {}` (reserve arrow functions for the inline callback/state-updater exception above).
+
+## JSX spacing
+
+- Keep exactly **one space** between JSX siblings when they appear on the same line (e.g. `</Foo> <Bar />`), not `</Foo><Bar />` or with multiple spaces.

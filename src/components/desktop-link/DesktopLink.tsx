@@ -118,7 +118,7 @@ export function DesktopLink(props: DesktopLinkProps) {
           type="button"
           className="desktop-link-tile__remove typography--body"
           aria-label={`Remove link ${props.label}`}
-          onClick={function onRemoveClick() {
+          onClick={() => {
             props.onRemove()
           }}
           onPointerDown={handleRemovePointerDown}

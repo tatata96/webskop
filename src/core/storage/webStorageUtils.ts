@@ -62,11 +62,15 @@ function normalizeFolder(raw: unknown): DesktopFolderRecord | null {
   let links: DesktopLinkRecord[] = []
   if (Array.isArray(o.links)) {
     links = o.links
-      .map(function normalizeLink(entry): DesktopLinkRecord | null {
+      .map((entry): DesktopLinkRecord | null => {
         if (!entry || typeof entry !== 'object') return null
         const L = entry as Record<string, unknown>
         if (typeof L.id !== 'string' || typeof L.url !== 'string') return null
-        if (typeof L.label !== 'string' || typeof L.x !== 'number' || typeof L.y !== 'number') {
+        if (
+          typeof L.label !== 'string' ||
+          typeof L.x !== 'number' ||
+          typeof L.y !== 'number'
+        ) {
           return null
         }
         const preview =
@@ -80,9 +84,7 @@ function normalizeFolder(raw: unknown): DesktopFolderRecord | null {
           previewImageUrl: preview,
         }
       })
-      .filter(function isLink(x): x is DesktopLinkRecord {
-        return x !== null
-      })
+      .filter((x): x is DesktopLinkRecord => x !== null)
   }
   return {
     id: o.id,
@@ -104,8 +106,6 @@ export function loadFolders(): DesktopFolderRecord[] | null {
   }
   const normalized = stored
     .map(normalizeFolder)
-    .filter(function isFolder(f): f is DesktopFolderRecord {
-      return f !== null
-    })
+    .filter((f): f is DesktopFolderRecord => f !== null)
   return normalized.length ? normalized : null
 }

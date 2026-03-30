@@ -21,7 +21,7 @@ export function FolderIcon(props: FolderIconProps) {
       className={props.className}
       style={props.style}
       aria-hidden={true}
-      onDragStart={function preventDrag(e) {
+      onDragStart={(e) => {
         e.preventDefault()
       }}
     >

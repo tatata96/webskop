@@ -68,17 +68,13 @@ function App() {
   }
 
   function handleToggleResources() {
-    setResourcesPageOpen(function toggle(open) {
-      return !open
-    })
+    setResourcesPageOpen((open) => !open)
   }
 
   function handleFoldersItemsChange(next: DesktopItem[]) {
     setItems(next)
-    setOpenFolderId(function clearIfRemoved(prev) {
-      if (prev && !next.some(function hasId(f) {
-        return f.id === prev
-      })) {
+    setOpenFolderId((prev) => {
+      if (prev && !next.some((f) => f.id === prev)) {
         return null
       }
       return prev
@@ -86,22 +82,20 @@ function App() {
   }
 
   const openFolder = openFolderId
-    ? items.find(function find(f) {
-        return f.id === openFolderId
-      })
+    ? items.find((f) => f.id === openFolderId)
     : null
 
   const handleFolderLinksChange = useCallback(
-    function handleFolderLinksChange(update: SetStateAction<DesktopLinkRecord[]>) {
+    (update: SetStateAction<DesktopLinkRecord[]>) => {
       if (!openFolderId) return
-      setItems(function merge(prev) {
-        return prev.map(function mapFolder(f) {
+      setItems((prev) =>
+        prev.map((f) => {
           if (f.id !== openFolderId) return f
           const nextLinks =
             typeof update === 'function' ? update(f.links) : update
           return { ...f, links: nextLinks }
-        })
-      })
+        }),
+      )
     },
     [openFolderId],
   )
@@ -115,10 +109,8 @@ function App() {
         resourcesOpen={resourcesPageOpen}
         onToggleResources={handleToggleResources}
         folderListOpen={folderSidebarOpen}
-        onToggleFolderList={function toggleFolderList() {
-          setFolderSidebarOpen(function toggle(open) {
-            return !open
-          })
+        onToggleFolderList={() => {
+          setFolderSidebarOpen((open) => !open)
         }}
       />
       <div className="app-shell__body">
@@ -126,7 +118,7 @@ function App() {
           {resourcesPageOpen ? (
             <ResourcesExport
               folders={items}
-              onClose={function closeResources() {
+              onClose={() => {
                 setResourcesPageOpen(false)
               }}
             />
@@ -151,10 +143,10 @@ function App() {
           open={folderSidebarOpen}
           folders={items}
           activeFolderId={openFolderId}
-          onClose={function closeFolderSidebar() {
+          onClose={() => {
             setFolderSidebarOpen(false)
           }}
-          onFolderSelect={function selectFolderFromSidebar(folderId: string) {
+          onFolderSelect={(folderId: string) => {
             setResourcesPageOpen(false)
             setOpenFolderId(folderId)
           }}

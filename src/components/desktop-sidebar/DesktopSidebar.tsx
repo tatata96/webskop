@@ -15,19 +15,16 @@ type DesktopSidebarProps = {
 export function DesktopSidebar(props: DesktopSidebarProps) {
   const { open, onClose, folders, activeFolderId, onFolderSelect } = props
 
-  useEffect(
-    function closeOnEscape() {
-      if (!open) return
-      function onKeyDown(e: KeyboardEvent) {
-        if (e.key === 'Escape') onClose()
-      }
-      window.addEventListener('keydown', onKeyDown)
-      return function cleanup() {
-        window.removeEventListener('keydown', onKeyDown)
-      }
-    },
-    [open, onClose],
-  )
+  useEffect(() => {
+    if (!open) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => {
+      window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [open, onClose])
 
   return (
     <div
@@ -42,7 +39,7 @@ export function DesktopSidebar(props: DesktopSidebarProps) {
       >
         <nav className="desktop-sidebar__nav" aria-label="All folders">
           <ul className="desktop-sidebar__list">
-            {folders.map(function row(folder) {
+            {folders.map((folder) => {
               const accent = folderAccentColor(folder.id)
               const isActive = activeFolderId === folder.id
               return (
@@ -60,7 +57,7 @@ export function DesktopSidebar(props: DesktopSidebarProps) {
                       } as CSSProperties
                     }
                     aria-current={isActive ? 'true' : undefined}
-                    onClick={function selectFolder() {
+                    onClick={() => {
                       onFolderSelect(folder.id)
                     }}
                   >

@@ -10,31 +10,28 @@ export type ResourcesExportProps = {
 export function ResourcesExport(props: ResourcesExportProps) {
   const { folders, onClose } = props
 
-  useEffect(
-    function closeOnEscape() {
-      function onKeyDown(e: KeyboardEvent) {
-        if (e.key === 'Escape') onClose()
-      }
-      window.addEventListener('keydown', onKeyDown)
-      return function cleanup() {
-        window.removeEventListener('keydown', onKeyDown)
-      }
-    },
-    [onClose],
-  )
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => {
+      window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [onClose])
 
   function handleSavePdf() {
     document.body.classList.add('print-export')
-    function cleanup() {
+    const cleanup = () => {
       document.body.classList.remove('print-export')
     }
-    function onAfterPrint() {
+    const onAfterPrint = () => {
       window.removeEventListener('afterprint', onAfterPrint)
       cleanup()
     }
     window.addEventListener('afterprint', onAfterPrint)
     window.print()
-    window.setTimeout(function fallbackCleanup() {
+    window.setTimeout(() => {
       window.removeEventListener('afterprint', onAfterPrint)
       if (document.body.classList.contains('print-export')) {
         cleanup()
@@ -45,37 +42,33 @@ export function ResourcesExport(props: ResourcesExportProps) {
   return (
     <div className="resources-export">
       <div className="resources-export__list typography--body">
-        {folders.map(function renderFolder(folder) {
-          return (
-            <section key={folder.id} className="resources-export__section">
-              <h2 className="resources-export__folder-title typography--h5 color--text-main">
-                {folder.label}
-              </h2>
-              {folder.links.length === 0 ? (
-                <p className="resources-export__empty typography--body color--text-main">
-                  No links
-                </p>
-              ) : (
-                <ul className="resources-export__link-list">
-                  {folder.links.map(function renderLink(link) {
-                    return (
-                      <li key={link.id} className="resources-export__link-item">
-                        <a
-                          href={link.url}
-                          className="resources-export__link typography--body"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {link.label}
-                        </a>
-                      </li>
-                    )
-                  })}
-                </ul>
-              )}
-            </section>
-          )
-        })}
+        {folders.map((folder) => (
+          <section key={folder.id} className="resources-export__section">
+            <h2 className="resources-export__folder-title typography--h5 color--text-main">
+              {folder.label}
+            </h2>
+            {folder.links.length === 0 ? (
+              <p className="resources-export__empty typography--body color--text-main">
+                No links
+              </p>
+            ) : (
+              <ul className="resources-export__link-list">
+                {folder.links.map((link) => (
+                  <li key={link.id} className="resources-export__link-item">
+                    <a
+                      href={link.url}
+                      className="resources-export__link typography--body"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        ))}
       </div>
       <aside className="resources-export__actions" aria-label="Export">
         <div className="resources-export__action-buttons">

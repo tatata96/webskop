@@ -109,7 +109,7 @@ export function DesktopFolder(props: DesktopFolderProps) {
           type="button"
           className="desktop-folder-tile__remove typography--body"
           aria-label={`Remove folder ${props.label}`}
-          onClick={function onRemoveClick() {
+          onClick={() => {
             props.onRemove()
           }}
           onPointerDown={handleRemovePointerDown}
