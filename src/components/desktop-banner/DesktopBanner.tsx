@@ -1,17 +1,7 @@
 import { useState } from 'react'
 import logoUrl from '../../core/ui/images/logo.png'
+import type { DesktopSearchResult } from '../../hooks/useDesktopSearch'
 import './desktop-banner.scss'
-
-export type DesktopSearchResult =
-  {
-      id: string
-      kind: 'link'
-      folderId: string
-      folderLabel: string
-      linkId: string
-      linkLabel: string
-      linkUrl: string
-    }
 
 type DesktopBannerProps = {
   onGoHome: () => void

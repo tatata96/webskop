@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, type SetStateAction } from 'react'
-import { DesktopBanner, type DesktopSearchResult } from './components/desktop-banner/DesktopBanner'
+import { DesktopBanner } from './components/desktop-banner/DesktopBanner'
 import { DesktopSidebar } from './components/desktop-sidebar/DesktopSidebar'
 import { Desktop } from './components/desktop/Desktop'
 import { FolderColorPicker } from './components/folder-color-picker/FolderColorPicker'
@@ -12,6 +12,7 @@ import {
   saveFolderIconColor,
 } from './core/storage/webStorageUtils'
 import { folderAccentColor } from './core/ui/folderAccentColor'
+import { useDesktopSearch, type DesktopSearchResult } from './hooks/useDesktopSearch'
 import './App.scss'
 
 const defaultDesktopItems: DesktopItem[] = [
@@ -41,50 +42,17 @@ function App() {
     saveFolderIconColor(folderIconColor)
   }, [folderIconColor])
 
-  const openFolder = openFolderId
-    ? items.find((f) => f.id === openFolderId)
-    : null
-  const normalizedSearchQuery = searchQuery.trim().toLowerCase()
-  const hasSearchQuery = normalizedSearchQuery.length > 0
-
-  const visibleFolders = hasSearchQuery
-    ? items.filter((folder) => {
-      return folder.label.toLowerCase().includes(normalizedSearchQuery)
-    })
-    : items
-
-  const visibleLinks = hasSearchQuery && openFolder
-    ? openFolder.links.filter((link) => {
-      return (
-        link.label.toLowerCase().includes(normalizedSearchQuery) ||
-        link.url.toLowerCase().includes(normalizedSearchQuery)
-      )
-    })
-    : openFolder?.links ?? []
-
-  const globalLinkResults: DesktopSearchResult[] = openFolderId === null && hasSearchQuery
-    ? items.flatMap((folder) => {
-      return folder.links
-        .filter((link) => {
-          return (
-            link.label.toLowerCase().includes(normalizedSearchQuery) ||
-            link.url.toLowerCase().includes(normalizedSearchQuery) ||
-            folder.label.toLowerCase().includes(normalizedSearchQuery)
-          )
-        })
-        .map((link) => {
-          return {
-            id: `${folder.id}:${link.id}`,
-            kind: 'link' as const,
-            folderId: folder.id,
-            folderLabel: folder.label,
-            linkId: link.id,
-            linkLabel: link.label,
-            linkUrl: link.url,
-          }
-        })
-    })
-    : []
+  const {
+    openFolder,
+    hasSearchQuery,
+    visibleFolders,
+    visibleLinks,
+    globalLinkResults,
+  } = useDesktopSearch({
+    items,
+    openFolderId,
+    searchQuery,
+  })
 
   const handleFolderLinksChange = useCallback(
     (update: SetStateAction<DesktopLinkRecord[]>) => {
