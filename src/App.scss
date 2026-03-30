@@ -1,16 +1,20 @@
 .app-shell {
+  --app-shell-banner-height: 48px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .app-shell__body {
   display: flex;
   flex: 1;
+  height: calc(100vh - var(--app-shell-banner-height));
   min-height: 0;
   flex-direction: row;
   align-items: stretch;
+  margin-top: var(--app-shell-banner-height);
 }
 
 .app-shell__main {

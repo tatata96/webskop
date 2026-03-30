@@ -185,6 +185,11 @@ function DesktopLinksView({
 
   return (
     <div className="desktop" ref={rootRef} style={desktopStyle}>
+      {items.length === 0 && (
+        <p className="desktop__empty-links typography--body color--text-main">
+          Paste your link directly here.
+        </p>
+      )}
       {items.map((link) => {
         const imageSrc = link.previewImageUrl ?? faviconUrlForPageUrl(link.url)
         const imageAlt = link.label || link.url

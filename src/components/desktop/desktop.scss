@@ -8,3 +8,15 @@
   background: var(--gray-250);
   font-family: var(--font-family--secondary);
 }
+
+.desktop__empty-links {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  transform: translate(-50%, -50%);
+  opacity: 0.72;
+  pointer-events: none;
+  user-select: none;
+  text-align: center;
+}

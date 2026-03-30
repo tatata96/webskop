@@ -95,6 +95,7 @@ function App() {
         searchResults={globalLinkResults}
         onSelectSearchResult={handleSearchResultSelect}
         currentFolderLabel={openFolder?.label ?? null}
+        folderTriangleColor={folderIconColor}
       />
 
       <div className="app-shell__body">
@@ -138,11 +139,13 @@ function App() {
           }}
         />
       </div>
-
-      <FolderColorPicker
+      
+      {!openFolderId && !resourcesPageOpen && (
+        <FolderColorPicker
         value={folderIconColor}
         onChange={setFolderIconColor}
       />
+      )}
     </div>
   )
 

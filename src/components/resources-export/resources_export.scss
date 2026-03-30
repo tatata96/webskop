@@ -6,14 +6,14 @@
   gap: 28px;
   align-items: flex-start;
   min-height: 0;
-  padding: 24px 28px 32px;
+  padding: 64px 28px 32px;
 }
 
 .resources-export__list {
   flex: 1;
   min-width: 0;
   overflow: auto;
-  padding-right: 4px;
+  padding-right: 220px;
 }
 
 .resources-export__back {
@@ -78,8 +78,10 @@
 .resources-export__actions {
   flex-shrink: 0;
   width: 200px;
-  position: sticky;
-  top: 16px;
+  position: fixed;
+  top: 84px;
+  right: 28px;
+  z-index: 5;
   padding: 16px;
   border-radius: 12px;
   background: transparent;
@@ -114,6 +116,10 @@
 }
 
 @media (max-width: 720px) {
+  .resources-export__list {
+    padding-right: 4px;
+  }
+
   .resources-export {
     flex-direction: column;
     padding: 16px 16px 28px;

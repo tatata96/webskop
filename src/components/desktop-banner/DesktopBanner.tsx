@@ -18,6 +18,7 @@ type DesktopBannerProps = {
   searchResults: DesktopSearchResult[]
   onSelectSearchResult: (result: DesktopSearchResult) => void
   currentFolderLabel: string | null
+  folderTriangleColor: string
 }
 
 export function DesktopBanner(props: DesktopBannerProps) {
@@ -160,6 +161,7 @@ export function DesktopBanner(props: DesktopBannerProps) {
                 ? 'desktop-banner__folders-triangle desktop-banner__folders-triangle--open'
                 : 'desktop-banner__folders-triangle'
             }
+            style={{ color: props.folderTriangleColor }}
             viewBox="0 0 12 14"
             aria-hidden="true"
             focusable="false"

@@ -124,7 +124,6 @@
   border-radius: 999px;
   padding: 8px 14px;
   background: transparent;
-  color: var(--foreground);
   cursor: pointer;
 }
 
@@ -138,7 +137,7 @@
 }
 
 .desktop-banner__folders-triangle polygon {
-  fill: var(--orange-400);
+  fill: currentColor;
 }
 
 .desktop-banner__folders-triangle--open {
