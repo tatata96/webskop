@@ -15,8 +15,7 @@ import { folderAccentColor } from './core/ui/folderAccentColor'
 import './App.scss'
 
 const defaultDesktopItems: DesktopItem[] = [
-  { id: '1', label: 'Bookmarks', x: 40, y: 40, links: [] },
-  { id: '2', label: 'Reading list', x: 40, y: 160, links: [] },
+  { id: '1', label: 'Test', x: 40, y: 40, links: [{ id: '1', url: 'https://www.google.com', label: 'Google', x: 40, y: 40 }] },
 ]
 
 const ITEM_GAP_Y = 120
@@ -40,6 +39,92 @@ function App() {
   useEffect(() => {
     saveFolderIconColor(folderIconColor)
   }, [folderIconColor])
+
+  const openFolder = openFolderId
+    ? items.find((f) => f.id === openFolderId)
+    : null
+
+  const handleFolderLinksChange = useCallback(
+    (update: SetStateAction<DesktopLinkRecord[]>) => {
+      if (!openFolderId){
+        return
+      }
+      setItems((prev) =>
+        prev.map((folder) => {
+          if (folder.id !== openFolderId){
+            return folder
+          }
+
+          const nextLinks =
+            typeof update === 'function' ? update(folder.links) : update
+          return { ...folder, links: nextLinks }
+        }),
+      )
+    },
+    [openFolderId],
+  )
+
+  return (
+    <div className="app-shell">
+      <DesktopBanner
+        onGoHome={handleGoHome}
+        showAdd={openFolderId === null}
+        onAddItem={handleAddItem}
+        resourcesOpen={resourcesPageOpen}
+        onToggleResources={handleToggleResources}
+        folderListOpen={folderSidebarOpen}
+        onToggleFolderList={() => {
+          setFolderSidebarOpen((open) => !open)
+        }}
+      />
+
+      <div className="app-shell__body">
+        <div className="app-shell__main">
+          {resourcesPageOpen ? (
+            <ResourcesExport
+              folders={items}
+              onClose={() => {
+                setResourcesPageOpen(false)
+              }}
+            />
+          ) : openFolder ? (
+            <Desktop
+              surface="links"
+              items={openFolder.links}
+              onItemsChange={handleFolderLinksChange}
+              folderAccentColor={folderAccentColor(openFolder.id)}
+            />
+          ) : (
+            <Desktop
+              surface="folders"
+              items={items}
+              onItemsChange={handleFoldersItemsChange}
+              onFolderOpen={handleFolderOpen}
+              folderIconColor={folderIconColor}
+            />
+          )}
+        </div>
+
+        <DesktopSidebar
+          open={folderSidebarOpen}
+          folders={items}
+          activeFolderId={openFolderId}
+          onClose={() => {
+            setFolderSidebarOpen(false)
+          }}
+          onFolderSelect={(folderId: string) => {
+            setResourcesPageOpen(false)
+            setOpenFolderId(folderId)
+          }}
+        />
+      </div>
+
+      <FolderColorPicker
+        value={folderIconColor}
+        onChange={setFolderIconColor}
+      />
+    </div>
+  )
 
   function handleAddItem() {
     const index = items.length
@@ -80,84 +165,6 @@ function App() {
       return prev
     })
   }
-
-  const openFolder = openFolderId
-    ? items.find((f) => f.id === openFolderId)
-    : null
-
-  const handleFolderLinksChange = useCallback(
-    (update: SetStateAction<DesktopLinkRecord[]>) => {
-      if (!openFolderId) return
-      setItems((prev) =>
-        prev.map((f) => {
-          if (f.id !== openFolderId) return f
-          const nextLinks =
-            typeof update === 'function' ? update(f.links) : update
-          return { ...f, links: nextLinks }
-        }),
-      )
-    },
-    [openFolderId],
-  )
-
-  return (
-    <div className="app-shell">
-      <DesktopBanner
-        onGoHome={handleGoHome}
-        showAdd={openFolderId === null}
-        onAddItem={handleAddItem}
-        resourcesOpen={resourcesPageOpen}
-        onToggleResources={handleToggleResources}
-        folderListOpen={folderSidebarOpen}
-        onToggleFolderList={() => {
-          setFolderSidebarOpen((open) => !open)
-        }}
-      />
-      <div className="app-shell__body">
-        <div className="app-shell__main">
-          {resourcesPageOpen ? (
-            <ResourcesExport
-              folders={items}
-              onClose={() => {
-                setResourcesPageOpen(false)
-              }}
-            />
-          ) : openFolder ? (
-            <Desktop
-              surface="links"
-              items={openFolder.links}
-              onItemsChange={handleFolderLinksChange}
-              folderAccentColor={folderAccentColor(openFolder.id)}
-            />
-          ) : (
-            <Desktop
-              surface="folders"
-              items={items}
-              onItemsChange={handleFoldersItemsChange}
-              onFolderOpen={handleFolderOpen}
-              folderIconColor={folderIconColor}
-            />
-          )}
-        </div>
-        <DesktopSidebar
-          open={folderSidebarOpen}
-          folders={items}
-          activeFolderId={openFolderId}
-          onClose={() => {
-            setFolderSidebarOpen(false)
-          }}
-          onFolderSelect={(folderId: string) => {
-            setResourcesPageOpen(false)
-            setOpenFolderId(folderId)
-          }}
-        />
-      </div>
-      <FolderColorPicker
-        value={folderIconColor}
-        onChange={setFolderIconColor}
-      />
-    </div>
-  )
 }
 
 export default App

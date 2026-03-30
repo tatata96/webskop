@@ -49,3 +49,20 @@ export const Desktop = () => { … }
 ## JSX spacing
 
 - Keep exactly **one space** between JSX siblings when they appear on the same line (e.g. `</Foo> <Bar />`), not `</Foo><Bar />` or with multiple spaces.
+
+## Curly braces for control flow
+
+- Always use curly braces for control-flow blocks (especially `if`/`else`), even when the block contains a single statement. Never write `if (cond) return value` without `{ ... }`.
+
+Example (see `src/App.tsx` around the `if (folder.id !== openFolderId)` logic):
+
+```tsx
+if (folder.id !== openFolderId){
+  return folder
+}
+```
+
+## Props destructuring (All components)
+
+- In React components, destructure props in the function parameter list (e.g. `function Component({ a, b }: PropsType)`).
+- Do not keep a `props` parameter and then reference `props.*` throughout the component body.
