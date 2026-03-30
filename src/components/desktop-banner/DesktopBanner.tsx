@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import logoUrl from '../../core/ui/images/logo.png'
+import type { DesktopSearchResult } from '../../hooks/useDesktopSearch'
 import './desktop-banner.scss'
 
 type DesktopBannerProps = {
@@ -9,9 +11,52 @@ type DesktopBannerProps = {
   onToggleResources: () => void
   onToggleFolderList: () => void
   folderListOpen: boolean
+  searchQuery: string
+  searchPlaceholder: string
+  onSearchQueryChange: (value: string) => void
+  searchDropdownOpen: boolean
+  searchResults: DesktopSearchResult[]
+  onSelectSearchResult: (result: DesktopSearchResult) => void
+  currentFolderLabel: string | null
 }
 
 export function DesktopBanner(props: DesktopBannerProps) {
+  const [activeResultIndex, setActiveResultIndex] = useState(0)
+  const hasSearchResults = props.searchResults.length > 0
+
+  function handleSearchKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+    if (!props.searchDropdownOpen) {
+      return
+    }
+
+    if (event.key === 'Escape') {
+      return
+    }
+
+    if (!hasSearchResults) {
+      return
+    }
+
+    if (event.key === 'ArrowDown') {
+      event.preventDefault()
+      setActiveResultIndex((index) =>
+        Math.min(index + 1, props.searchResults.length - 1),
+      )
+      return
+    }
+
+    if (event.key === 'ArrowUp') {
+      event.preventDefault()
+      setActiveResultIndex((index) => Math.max(index - 1, 0))
+      return
+    }
+
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      props.onSelectSearchResult(props.searchResults[activeResultIndex])
+    }
+  }
+
   return (
     <header className="desktop-banner">
       <div className="desktop-banner__left">
@@ -24,6 +69,63 @@ export function DesktopBanner(props: DesktopBannerProps) {
         >
           <img className="desktop-banner__logo" src={logoUrl} alt="" />
         </button>
+        <div className="desktop-banner__current-folder-slot" aria-hidden={!props.currentFolderLabel}>
+          {props.currentFolderLabel ? (
+            <span className="desktop-banner__current-folder typography--subhead-semibold color--text-main">
+              {props.currentFolderLabel}
+            </span>
+          ) : null}
+        </div>
+        <div className="desktop-banner__search">
+          <input
+            type="search"
+            className="desktop-banner__search-input typography--subhead-semibold"
+            value={props.searchQuery}
+            onChange={(event) => {
+              setActiveResultIndex(0)
+              props.onSearchQueryChange(event.target.value)
+            }}
+            onKeyDown={handleSearchKeyDown}
+            placeholder={props.searchPlaceholder}
+            aria-label="Search folders and links"
+          />
+          {props.searchDropdownOpen ? (
+            <div className="desktop-banner__search-dropdown" role="listbox" aria-label="Search results">
+              {hasSearchResults ? (
+                props.searchResults.map((result) => (
+                  <button
+                    key={result.id}
+                    type="button"
+                    className={
+                      result === props.searchResults[activeResultIndex]
+                        ? 'desktop-banner__search-result desktop-banner__search-result--active'
+                        : 'desktop-banner__search-result'
+                    }
+                    onMouseDown={(event) => {
+                      event.preventDefault()
+                    }}
+                    onMouseEnter={() => {
+                      setActiveResultIndex(
+                        props.searchResults.findIndex((candidate) => candidate.id === result.id),
+                      )
+                    }}
+                    onClick={() => {
+                      props.onSelectSearchResult(result)
+                    }}
+                  >
+                    <span className="desktop-banner__search-result-label typography--subhead-semibold">
+                      {`${result.folderLabel} > ${result.linkLabel}`}
+                    </span>
+                  </button>
+                ))
+              ) : (
+                <div className="desktop-banner__search-empty typography--body">
+                  No matches found
+                </div>
+              )}
+            </div>
+          ) : null}
+        </div>
       </div>
       <div className="desktop-banner__right">
         <button

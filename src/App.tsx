@@ -12,6 +12,7 @@ import {
   saveFolderIconColor,
 } from './core/storage/webStorageUtils'
 import { folderAccentColor } from './core/ui/folderAccentColor'
+import { useDesktopSearch, type DesktopSearchResult } from './hooks/useDesktopSearch'
 import './App.scss'
 
 const defaultDesktopItems: DesktopItem[] = [
@@ -31,6 +32,7 @@ function App() {
   const [folderSidebarOpen, setFolderSidebarOpen] = useState(false)
   const [resourcesPageOpen, setResourcesPageOpen] = useState(false)
   const [folderIconColor, setFolderIconColor] = useState(loadFolderIconColor)
+  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
     saveFolder(items)
@@ -40,9 +42,17 @@ function App() {
     saveFolderIconColor(folderIconColor)
   }, [folderIconColor])
 
-  const openFolder = openFolderId
-    ? items.find((f) => f.id === openFolderId)
-    : null
+  const {
+    openFolder,
+    hasSearchQuery,
+    visibleFolders,
+    visibleLinks,
+    globalLinkResults,
+  } = useDesktopSearch({
+    items,
+    openFolderId,
+    searchQuery,
+  })
 
   const handleFolderLinksChange = useCallback(
     (update: SetStateAction<DesktopLinkRecord[]>) => {
@@ -76,6 +86,15 @@ function App() {
         onToggleFolderList={() => {
           setFolderSidebarOpen((open) => !open)
         }}
+        searchQuery={searchQuery}
+        searchPlaceholder={
+          openFolderId === null ? 'Search folders or links' : 'Search links in this folder'
+        }
+        onSearchQueryChange={setSearchQuery}
+        searchDropdownOpen={openFolderId === null && hasSearchQuery}
+        searchResults={globalLinkResults}
+        onSelectSearchResult={handleSearchResultSelect}
+        currentFolderLabel={openFolder?.label ?? null}
       />
 
       <div className="app-shell__body">
@@ -90,14 +109,14 @@ function App() {
           ) : openFolder ? (
             <Desktop
               surface="links"
-              items={openFolder.links}
+              items={visibleLinks}
               onItemsChange={handleFolderLinksChange}
               folderAccentColor={folderAccentColor(openFolder.id)}
             />
           ) : (
             <Desktop
               surface="folders"
-              items={items}
+              items={visibleFolders}
               onItemsChange={handleFoldersItemsChange}
               onFolderOpen={handleFolderOpen}
               folderIconColor={folderIconColor}
@@ -115,6 +134,7 @@ function App() {
           onFolderSelect={(folderId: string) => {
             setResourcesPageOpen(false)
             setOpenFolderId(folderId)
+            setSearchQuery('')
           }}
         />
       </div>
@@ -145,11 +165,13 @@ function App() {
 
   function handleFolderOpen(folderId: string) {
     setOpenFolderId(folderId)
+    setSearchQuery('')
   }
 
   function handleGoHome() {
     setOpenFolderId(null)
     setResourcesPageOpen(false)
+    setSearchQuery('')
   }
 
   function handleToggleResources() {
@@ -164,6 +186,11 @@ function App() {
       }
       return prev
     })
+  }
+
+  function handleSearchResultSelect(result: DesktopSearchResult) {
+    setResourcesPageOpen(false)
+    setOpenFolderId(result.folderId)
   }
 }
 
