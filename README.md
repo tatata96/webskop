@@ -8,6 +8,8 @@ The **Resources** page lists everything and supports printing (for example, save
 
 Stack: **React**, **TypeScript**, **Vite**, and **Sass** for styling.
 
+Here's the demo: https://webskop.vercel.app/
+
 ## Setup
 
 ```bash
